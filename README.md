@@ -1,73 +1,64 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# NestJS-Prisma-PostgreSQL
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project serves as a simple CRUD application to help learn how to integrate NestJS with Prisma and PostgreSQL, utilizing Docker for the database service. It's a great starting point for understanding the basics of building backend applications with these technologies.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Getting Started
 
-## Description
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Prerequisites
 
-## Installation
+Ensure you have Docker installed on your system to use the PostgreSQL service defined in the `docker-compose.yml` file.
 
-```bash
-$ npm install
-```
+### Configuration
 
-## Running the app
+1. **Environment Variables**: This project relies on environment variables for its configuration, particularly for database connection details. Create a `.env` file at the root of the project and add the following lines:
 
-```bash
-# development
-$ npm run start
+   ```dotenv
+   POSTGRES_USER=<your_postgres_user>
+   POSTGRES_PASSWORD=<your_postgres_password>
+   POSTGRES_DB=<your_database_name>
+   ```
 
-# watch mode
-$ npm run start:dev
+   Replace `<your_postgres_user>`, `<your_postgres_password>`, and `<your_database_name>` with the actual values that are relevant to your PostgreSQL setup.
 
-# production mode
-$ npm run start:prod
-```
+   Next, define the connection URL for Prisma in the same `.env` file:
 
-## Test
+   ```dotenv
+   DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_DB}?schema=public"
+   ```
+
+   Ensure that the values of `POSTGRES_USER`, `POSTGRES_PASSWORD`, and `POSTGRES_DB` are consistent with what you set previously. This URL facilitates the connection between Prisma and your PostgreSQL database.
+
+### Running with Docker
+
+Execute the following command to start the PostgreSQL database using Docker:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+docker-compose up -d
 ```
 
-## Support
+This command initializes a Docker container for PostgreSQL in detached mode.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Installing Dependencies
 
-## Stay in touch
+With the database operational, proceed to install the project dependencies:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+npm i
+```
 
-## License
+### Running the Application
 
-Nest is [MIT licensed](LICENSE).
+To launch the NestJS application in development mode, which enables hot-reloading, run:
+
+```bash
+npm run start:dev
+```
+
+This command fires up the server and watches for any changes to your source files, reloading the application as needed.
+
+## Additional Information
+
+- For database management and visualization through Prisma Studio, execute `npx prisma studio`.
+- Consult the official documentation for [NestJS](https://docs.nestjs.com/), [Prisma](https://www.prisma.io/docs/), and [PostgreSQL](https://www.postgresql.org/docs/) for more detailed information and further customization options.
